@@ -10,13 +10,13 @@ public class CreateFruit : BaseEndpoint<CreateFruitRequest>
 {
     public override void AddRoute(IEndpointRouteBuilder app)
     {
-        Post(app, "/fruits/create/{id}", async ([FromBody] CreateFruitRequest request,
+        Post(app, "/fruits/create", async ([FromBody] CreateFruitRequest request,
             [FromServices] CreateFruitHandler handler,
             CancellationToken cancellationToken = default) =>
         {
-            var parameters = new RequestParameters<CreateFruitRequest>(request);
-
-            await handler.HandleAsync(parameters, cancellationToken);
+            handler.RequestParameters.Request = request;
+            
+            return await handler.HandleAsync(cancellationToken);
         });
     }
 }

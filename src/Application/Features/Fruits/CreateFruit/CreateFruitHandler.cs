@@ -9,10 +9,9 @@ namespace Application.Features.Fruits.CreateFruit;
 public class CreateFruitHandler(IApplicationDbContext dbContext)
     : EndpointHandler<CreateFruitRequest, CreateFruitResponse>
 {
-    public override async Task<IResult> HandleAsync(RequestParameters<CreateFruitRequest> requestParameters,
-        CancellationToken cancellationToken)
+    public override async Task<IResult> HandleAsync(CancellationToken cancellationToken)
     {
-        var fruit = new Fruit { Name = requestParameters.Request!.Name, Price = requestParameters.Request!.Price };
+        var fruit = new Fruit { Name = RequestParameters.Request!.Name, Price = RequestParameters.Request!.Price };
 
         dbContext.Fruits.Add(fruit);
         await dbContext.SaveChangesAsync(cancellationToken);

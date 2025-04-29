@@ -7,11 +7,9 @@ namespace Application.Features.Fruits.GetFruitById;
 
 public class GetFruitByIdHandler(IApplicationDbContext dbContext) : EndpointHandler<GetFruitByIdResponse>
 {
-    public override async Task<IResult> HandleAsync(RequestParameters? requestParameters,
-        CancellationToken cancellationToken = default)
+    public override async Task<IResult> HandleAsync(CancellationToken cancellationToken = default)
     {
-        if (!Guid.TryParse(requestParameters!.RouteParameters!["id"], out var id))
-            return ErrorResponse(ResponseErrorCode.BadRequest);
+        var id = FromRoute<Guid>("id");
 
         var fruit = await dbContext.Fruits.FindAsync(id);
         

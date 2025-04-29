@@ -13,15 +13,9 @@ public class GetFruitById : BaseEndpoint<GetFruitByIdResponse>
             [FromRoute] Guid id,
             CancellationToken cancellationToken) =>
         {
-            var requestParameters = new RequestParameters()
-            {
-                RouteParameters = new Dictionary<string, string>()
-                {
-                    { "id", id.ToString() }
-                }
-            };
+            handler.RequestParameters.RouteParameters["id"] = id.ToString();
 
-            return await handler.HandleAsync(requestParameters, cancellationToken);
+            return await handler.HandleAsync(cancellationToken);
         });
     }
 }
