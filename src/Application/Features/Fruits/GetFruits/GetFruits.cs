@@ -8,7 +8,7 @@ public class GetFruits : BaseEndpoint<GetFruitsResponse>
 {
     public override void AddRoute(IEndpointRouteBuilder app)
     {
-        Get(app, "/fruits/{id}", async ([FromServices] GetFruitsHandler handler) =>
+        Get(app, "/fruits", async ([FromServices] GetFruitsHandler handler) =>
         await handler.HandleAsync(null));
     }
 }

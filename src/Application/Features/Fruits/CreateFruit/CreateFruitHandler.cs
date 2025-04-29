@@ -6,8 +6,8 @@ using MinimalApi.Library.Endpoints;
 
 namespace Application.Features.Fruits.CreateFruit;
 
-public class CreateFruitHandler(IApplicationDbContext dbContext, IHttpContextAccessor httpContextAccessor)
-    : EndpointHandler<CreateFruitRequest, CreateFruitResponse>(httpContextAccessor)
+public class CreateFruitHandler(IApplicationDbContext dbContext)
+    : EndpointHandler<CreateFruitRequest, CreateFruitResponse>
 {
     public override async Task<IResult> HandleAsync(RequestParameters<CreateFruitRequest> requestParameters,
         CancellationToken cancellationToken)
