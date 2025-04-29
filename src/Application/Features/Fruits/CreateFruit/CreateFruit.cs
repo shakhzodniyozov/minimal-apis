@@ -2,7 +2,6 @@ using Application.Common.Endpoint;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using MinimalApi.Library.Endpoints;
 
 namespace Application.Features.Fruits.CreateFruit;
 
@@ -10,13 +9,13 @@ public class CreateFruit : BaseEndpoint<CreateFruitRequest>
 {
     public override void AddRoute(IEndpointRouteBuilder app)
     {
-        Post(app, "/fruits/create/{id}", async ([FromBody] CreateFruitRequest request,
-            [FromServices] CreateFruitHandler handler,
-            CancellationToken cancellationToken = default) =>
-        {
-            var parameters = new RequestParameters<CreateFruitRequest>(request);
+        Post(app, "/fruits/create", SetHandler);
+    }
 
-            await handler.HandleAsync(parameters, cancellationToken);
-        });
+    private static async Task<IResult> SetHandler([FromServices] CreateFruitHandler handler,
+        [FromBody] CreateFruitRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        return await handler.HandleAsync(request, cancellationToken);
     }
 }
